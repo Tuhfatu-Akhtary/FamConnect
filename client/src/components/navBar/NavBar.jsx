@@ -6,16 +6,24 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ChatIcon from '@mui/icons-material/Chat';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import Diversity3Icon from '@mui/icons-material/Diversity3';
+import LightModeIcon from '@mui/icons-material/LightMode';
 import {Link} from "react-router-dom";
+import {useContext} from "react";
+import {DarkModeContext} from "../../context/darkModeContext.jsx";
+import {AuthContext} from "../../context/authContext.jsx";
+
 const NavBar=()=>{
+
+    const {toggle, darkMode } = useContext(DarkModeContext)
+    const { currentUser } = useContext(AuthContext)
     return(
         <div className="navbar">
             <div className="left">
                 <Link to="/" style={{textDecoration:"none"}}>
-                <span>famconnect</span>
+                <span>Famconnect</span>
                 </Link>
                 <HomeIcon/>
-                <DarkModeIcon/>
+                {darkMode ? <LightModeIcon onClick={toggle}/>:<DarkModeIcon onClick={toggle}/>}
                 <Diversity3Icon/>
                 <div className="search">
                     <SearchIcon/>
@@ -27,8 +35,8 @@ const NavBar=()=>{
                 <NotificationsNoneIcon/>
                 <AccountCircleIcon/>
                 <div className="user">
-                    <img src="" alt=""/>
-                    <span>Swaty</span>
+                    <img src={currentUser.profilePic} alt=""/>
+                    <span>{currentUser.name}</span>
                 </div>
             </div>
         </div>
