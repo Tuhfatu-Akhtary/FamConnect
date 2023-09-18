@@ -9,10 +9,12 @@ import LeftBar from "./components/leftBar/LeftBar.jsx";
 import RightBar from "./components/rightBar/RightBar.jsx";
 import Home from "./pages/home/Home.jsx";
 import Profile from "./pages/profile/Profile.jsx";
+import UserProfile from "./pages/userProfile/UserProfile.jsx";
 import "./style.scss"
 import {useContext} from "react";
 import {DarkModeContext} from "./context/darkModeContext.jsx";
 import {AuthContext} from "./context/authContext.jsx";
+import FamilyTree from "./components/familyTree/FamilyTree.jsx";
 function App(){
 
     const {currentUser} = useContext(AuthContext);
@@ -60,7 +62,7 @@ function App(){
                {
                    path:"/profile/:id",
                    element:<Profile/>
-               }
+               },
            ]
         },
     {
@@ -71,6 +73,15 @@ function App(){
         path: "/register",
         element: <Register/>,
     },
+        {
+            path: "/userProfile",
+            element: <UserProfile/>,
+        },
+
+        {
+            path: "/familytree",
+            element: <FamilyTree/>,
+        },
 ]);
 
     return (

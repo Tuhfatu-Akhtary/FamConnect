@@ -22,6 +22,8 @@
       -moz-box-shadow: -5px 2px 8px -1px rgba(153,156,193,0.63);
       margin-bottom: 20px;
       background-color: themed("bg");
+      padding: 30px;
+      border-radius: 10px;
 
       span{
         color: gray;
@@ -32,7 +34,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin: 20px 0px;
+        margin: 20px 0;
 
         .userInfo{
           display: flex;
