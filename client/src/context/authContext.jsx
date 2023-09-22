@@ -1,20 +1,21 @@
-import {createContext, useEffect, useState} from "react";
-import pro from "../assets/profile.jpg";
-export const AuthContext = createContext()
+import axios from "axios";
+import { createContext, useEffect, useState} from "react";
 
+export const AuthContext = createContext();
 // eslint-disable-next-line react/prop-types
-export const AuthContextProvider = ({children}) =>{
+export const AuthContextProvider = ({children}) => {
     const [currentUser,setCurrentUser] = useState(
         JSON.parse(localStorage.getItem("user")) || null
     );
 
-    const login =()=>{
-        setCurrentUser({
-            id:1,
-            name:"Swaty",
-            profilePic:{pro}
+    const login = async (inputs)=>{
+        const res = await axios.post("http://localhost:8800/server/auth/login", inputs, {
+            withCredentials: true,
         });
-    }
+
+        setCurrentUser(res.data);
+
+    };
 
     useEffect(() => {
         localStorage.setItem("user", JSON.stringify(currentUser))

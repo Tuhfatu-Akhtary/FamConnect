@@ -15,16 +15,21 @@ import {useContext} from "react";
 import {DarkModeContext} from "./context/darkModeContext.jsx";
 import {AuthContext} from "./context/authContext.jsx";
 import FamilyTree from "./components/familyTree/FamilyTree.jsx";
+import { QueryClient, QueryClientProvider } from 'react-query'
+
 function App(){
 
     const {currentUser} = useContext(AuthContext);
 
     const {darkMode} = useContext(DarkModeContext);
 
+    const queryClient = new QueryClient()
+
     console.log(darkMode);
 
     const Layout =()=>{
         return(
+            <QueryClientProvider client={queryClient}>
             <div className={`theme-${darkMode ? "dark" : "light"}`}>
                 <NavBar/>
                 <div style={{display:"flex"}}>
@@ -36,6 +41,7 @@ function App(){
                     <RightBar/>
                 </div>
             </div>
+            </QueryClientProvider>
         )
     };
 
@@ -63,6 +69,15 @@ function App(){
                    path:"/profile/:id",
                    element:<Profile/>
                },
+               {
+                   path: "/userProfile/:id",
+                   element: <UserProfile/>,
+               },
+
+               {
+                   path: "/familytree/:id",
+                   element: <FamilyTree/>,
+               },
            ]
         },
     {
@@ -73,15 +88,7 @@ function App(){
         path: "/register",
         element: <Register/>,
     },
-        {
-            path: "/userProfile",
-            element: <UserProfile/>,
-        },
 
-        {
-            path: "/familytree",
-            element: <FamilyTree/>,
-        },
 ]);
 
     return (

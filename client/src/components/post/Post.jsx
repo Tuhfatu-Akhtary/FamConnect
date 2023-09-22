@@ -20,12 +20,12 @@ const Post=({ post })=>{
             <div className="user">
                 <div className="userInfo">
                     {/* eslint-disable-next-line react/prop-types */}
-                    <img src={post.profilePic} alt=""/>
+                    <img src={post.profile_pic} alt=""/>
                     <div className="details">
                         {/* eslint-disable-next-line react/prop-types */}
-                        <Link to={`/profile/${post.userId}`} style={{textDecoration:"none", color:"inherit"}}>
+                        <Link to={`/profile/${post.user_id}`} style={{textDecoration:"none", color:"inherit"}}>
                             {/* eslint-disable-next-line react/prop-types */}
-                            <span className="name">{post.name}</span>
+                            <span className="name">{post.user_name}</span>
                             <span className="date">1 min ago</span>
                         </Link>
                     </div>
@@ -34,9 +34,9 @@ const Post=({ post })=>{
             </div>
             <div className="content">
                 {/* eslint-disable-next-line react/prop-types */}
-                <p>{post.desc}</p>
+                <p>{post.post_content}</p>
                 {/* eslint-disable-next-line react/prop-types */}
-                <img src={post.img} alt=""/>
+                <img src={post.picture} alt=""/>
             </div>
             <div className="info">
                 <div className="item">
