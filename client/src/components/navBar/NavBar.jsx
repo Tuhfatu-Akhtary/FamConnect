@@ -2,7 +2,6 @@ import "./NavBar.scss";
 import HomeIcon from '@mui/icons-material/Home';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import SearchIcon from '@mui/icons-material/Search';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ChatIcon from '@mui/icons-material/Chat';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import Diversity3Icon from '@mui/icons-material/Diversity3';
@@ -22,22 +21,27 @@ const NavBar=()=>{
                 <Link to="/" style={{textDecoration:"none"}}>
                 <span>Famconnect</span>
                 </Link>
-                <HomeIcon/>
-                {darkMode ? <LightModeIcon onClick={toggle}/>:<DarkModeIcon onClick={toggle}/>}
-                <Diversity3Icon/>
+                <Link to="/">
+                    <HomeIcon className="icons"/>
+                </Link>
+
+                {darkMode ? <LightModeIcon className="icons" onClick={toggle}/>:<DarkModeIcon className="icons" onClick={toggle}/>}
+                <Diversity3Icon className="icons"/>
                 <div className="search">
-                    <SearchIcon/>
+                    <SearchIcon className="icons"/>
                     <input type="text" placeholder="Search"/>
                 </div>
             </div>
             <div className="right">
-                <ChatIcon/>
-                <NotificationsNoneIcon/>
-                <AccountCircleIcon/>
-                <div className="user">
-                    <img src={currentUser.profilePic} alt=""/>
-                    <span>{currentUser.name}</span>
-                </div>
+                <ChatIcon className="icons"/>
+                <NotificationsNoneIcon className="icons"/>
+                <Link to="/profile/:id" style={{textDecoration:"none"}}>
+                    <div className="user">
+                        <img src={currentUser.profile_pic} alt=""/>
+                        <span>{currentUser.user_name}</span>
+                    </div>
+                </Link>
+
             </div>
         </div>
     )

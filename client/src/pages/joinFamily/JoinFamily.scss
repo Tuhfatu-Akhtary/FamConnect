@@ -1,4 +1,4 @@
-.register{
+.joinFamily{
   height: 100%;
   background-color: rgb(193,190,255);
   display: flex;
@@ -12,8 +12,7 @@
     flex-direction: column;
     background-color: white;
     border-radius: 10px;
-    min-height: 400px;
-    overflow: hidden;
+    min-height: 200px;
 
     .up{
       flex: 1;
@@ -29,22 +28,15 @@
         text-align: center;
       }
 
-      p{}
-
-
-
     }
     .center{
       flex: 2;
-      padding: 30px;
+      padding: 50px;
       display: flex;
       flex-direction: column;
       gap: 10px;
       justify-content: center;
 
-      .center-stepper{
-        margin: auto;
-      }
       h1{
         color:#555;
         text-align: center;
@@ -53,6 +45,8 @@
         display: flex;
         flex-direction: column;
         gap: 30px;
+        justify-content: center;
+        align-items: center;
 
         input{
           border: none;
@@ -62,9 +56,11 @@
         .buttons {
           display: flex;
           flex-direction: row;
-          justify-content: space-between;
+          justify-content: center;
+          align-items: center;
+          padding: 30px;
           button {
-            width: 30%;
+            width: 100%;
             padding: 10px;
             border: none;
             background-color: #938eef;

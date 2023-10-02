@@ -19,10 +19,16 @@
       align-items: center;
       gap: 30px;
 
+
       span {
         font-weight: bold;
         font-size: 20px;
         color: themed("logo");
+      }
+
+      .icons{
+        cursor: pointer;
+        color: themed(textColor);
       }
 
       .search {
@@ -46,11 +52,17 @@
       align-items: center;
       gap: 20px;
 
+      .icons{
+        cursor: pointer;
+      }
+
       .user {
         display: flex;
         align-items: center;
         gap: 10px;
         font-weight: 500;
+        cursor: pointer;
+        color: themed(textColor);
 
         img {
           width: 30px;

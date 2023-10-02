@@ -17,15 +17,22 @@ export const register = (req,res)=>{
             const salt = bcrypt.genSaltSync(10);
             const hashedPassword = bcrypt.hashSync(req.body.password,salt);
 
-            const q = "INSERT INTO user (user_name, first_name, last_name, email, passwordHash) VALUES (?)";
+            const q="INSERT INTO user (first_name, last_name, father_name, mother_name, dob, gender, email, phone_no, user_name, passwordHash, profile_pic, cover_pic) VALUES (?) "
+
 
             const values =[
-                req.body.user_name,
                 req.body.first_name,
                 req.body.last_name,
+                req.body.father_name,
+                req.body.mother_name,
+                req.body.dob,
+                req.body.gender,
                 req.body.email,
-                hashedPassword
-
+                req.body.phone_no,
+                req.body.user_name,
+                hashedPassword,
+                req.body.profile_pic,
+                req.body.cover_pic
             ];
 
             db.query(q,[values], (err,data)=>{

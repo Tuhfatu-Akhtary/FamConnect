@@ -4,10 +4,25 @@ import family from "../../assets/family.png"
 import event from "../../assets/events.png"
 import memories from "../../assets/memories.png"
 import settings from "../../assets/settings.png"
-import {useContext} from "react";
+import {useContext, useState} from "react";
 import {AuthContext} from "../../context/authContext.jsx";
+import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 const LeftBar=()=>{
+    const [err,setErr]= useState(null)
+    const navigate=useNavigate();
+    const handleClick =async (e) => {
+        e.preventDefault();
+
+        try {
+            await axios.post("http://localhost:8800/server/auth/logout");
+            navigate("/login");
+        } catch (err) {
+            setErr(err.response.data)
+        }
+
+    };
 
     const { currentUser } = useContext(AuthContext)
     return(
@@ -15,7 +30,7 @@ const LeftBar=()=>{
             <div className="container">
                 <div className="menu">
                     <div className="user">
-                        <img src={currentUser.profilePic} alt=""/>
+                        <img src={currentUser.profile_pic} alt=""/>
                         <span>{currentUser.user_name}</span>
                     </div>
 
@@ -35,7 +50,7 @@ const LeftBar=()=>{
                         <img src={settings} alt="setting"/>
                         <span>Settings</span>
                     </div>
-                    <div className="item">
+                    <div className="item" onClick={handleClick}>
                         <img src={logout} alt="logout"/>
                         <span>Log out</span>
                     </div>

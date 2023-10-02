@@ -7,6 +7,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import {Link} from "react-router-dom";
 import Comments from "../comments/Comments.jsx";
 import {useState} from "react";
+import moment from "moment";
 
 
 // eslint-disable-next-line react/prop-types
@@ -14,6 +15,25 @@ const Post=({ post })=>{
 
     const  [commentOpen, setCommentOpen]=useState(true)
     const liked= false;
+
+    /*function time() {
+        var startTime, endTime;
+
+        function start() {
+            startTime = {post.created_at};
+        }
+
+        function end() {
+            endTime = new Date();
+            var timeDiff = endTime - startTime; //in ms
+            // strip the ms
+            timeDiff /= 1000;
+
+            // get seconds
+            var seconds = Math.round(timeDiff);
+            return seconds;
+        }
+    }*/
     return (
         <div className="post">
             <div className="container">
@@ -26,7 +46,7 @@ const Post=({ post })=>{
                         <Link to={`/profile/${post.user_id}`} style={{textDecoration:"none", color:"inherit"}}>
                             {/* eslint-disable-next-line react/prop-types */}
                             <span className="name">{post.user_name}</span>
-                            <span className="date">1 min ago</span>
+                            <span className="date">{moment(post.created_at).fromNow()}</span>
                         </Link>
                     </div>
                 </div>

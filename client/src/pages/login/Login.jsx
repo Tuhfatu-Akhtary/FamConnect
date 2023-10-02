@@ -35,7 +35,7 @@ const Login=()=>{
                     <p>Where Family Connects Together</p>
                     <span>Don't you have an account?</span>
                     <Link to="/register">
-                        <button>Register</button>
+                        <button>Create Account</button>
                     </Link>
 
                 </div>

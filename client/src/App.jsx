@@ -16,6 +16,9 @@ import {DarkModeContext} from "./context/darkModeContext.jsx";
 import {AuthContext} from "./context/authContext.jsx";
 import FamilyTree from "./components/familyTree/FamilyTree.jsx";
 import { QueryClient, QueryClientProvider } from 'react-query'
+import Welcome from "./pages/Welcome/Welcome.jsx";
+import JoinFamily from "./pages/joinFamily/JoinFamily.jsx";
+import CreateFamily from "./pages/createFamily/CreateFamily.jsx";
 
 function App(){
 
@@ -23,9 +26,7 @@ function App(){
 
     const {darkMode} = useContext(DarkModeContext);
 
-    const queryClient = new QueryClient()
-
-    console.log(darkMode);
+    const queryClient = new QueryClient();
 
     const Layout =()=>{
         return(
@@ -88,6 +89,18 @@ function App(){
         path: "/register",
         element: <Register/>,
     },
+        {
+            path: "/welcome",
+            element:<Welcome/>,
+        },
+        {
+            path:"/joinFamily",
+            element:<JoinFamily/>,
+        },
+        {
+            path:"/createFamily",
+            element:<CreateFamily/>,
+        }
 
 ]);
 
