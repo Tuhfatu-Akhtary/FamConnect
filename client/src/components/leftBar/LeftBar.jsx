@@ -2,7 +2,6 @@ import "./LeftBar.scss";
 import logout from "../../assets/logout.png"
 import family from "../../assets/family.png"
 import event from "../../assets/events.png"
-import memories from "../../assets/memories.png"
 import settings from "../../assets/settings.png"
 import {useContext, useState} from "react";
 import {AuthContext} from "../../context/authContext.jsx";
@@ -42,10 +41,7 @@ const LeftBar=()=>{
                         <img src={event} alt="events"/>
                         <span>Events</span>
                     </div>
-                    <div className="item">
-                        <img src={memories} alt="memories"/>
-                        <span>Memories</span>
-                    </div>
+
                     <div className="item">
                         <img src={settings} alt="setting"/>
                         <span>Settings</span>

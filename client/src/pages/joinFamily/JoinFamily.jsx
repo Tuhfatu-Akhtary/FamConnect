@@ -12,7 +12,7 @@ const JoinFamily=()=>{
                     <h1>Join family</h1>
                     <div className="forms">
                     <form>
-                        <input type="text" placeholder="Authentication Code"></input>
+                        <input type="text" placeholder="Authentication Code"/>
                         <div className="buttons">
                             <button>Enter</button>
                         </div>

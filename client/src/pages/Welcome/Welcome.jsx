@@ -15,12 +15,6 @@ const Welcome=()=>{
                     <button>Create Family</button>
                 </Link>
             </div>
-                <div className="buttons1">
-                    <Link to="/login">
-                        <button>Login</button>
-                    </Link>
-
-                </div>
             </div>
         </div>
     )

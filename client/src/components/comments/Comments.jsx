@@ -1,44 +1,59 @@
 import "./comments.scss";
 import {AuthContext} from "../../context/authContext.jsx";
-import {useContext} from "react";
+import {useContext, useState} from "react";
 import SendIcon from '@mui/icons-material/Send';
+import {useMutation, useQuery, useQueryClient} from "react-query";
+import {makeRequest} from "../../axios.js";
+import moment from "moment";
 
-   const Comments = () => {
-        const {currentUser} = useContext(AuthContext);
-        //Temporary
-        const comments = [
-            {
-                id: 1,
-                desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem nequeaspernatur ullam aperiam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem nequeaspernatur ullam aperiam",
-                name: "John Doe",
-                userId: 1,
-                profilePicture:
-                    "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-            },
-            {
-                id: 2,
-                desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem nequeaspernatur ullam aperiam",
-                name: "Jane Doe",
-                userId: 2,
-                profilePicture:
-                    "https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=1600",
-            },
-        ];
+// eslint-disable-next-line react/prop-types
+   const Comments = ({postId}) => {
+       const [content, setContent] = useState("");
+       const {currentUser} = useContext(AuthContext);
+       const { isLoading, error, data } = useQuery(["comments"], () =>
+           makeRequest.get("/comments?postId="+postId).then(res=>{
+               return res.data;
+           })
+       );
+
+       const queryClient = useQueryClient();
+
+       const mutation = useMutation((newComment) => {
+           return makeRequest.post("/comments", newComment)
+       }, {
+           onSuccess: () => {
+               // Invalidate and refetch
+               queryClient.invalidateQueries(["comments"])
+           },
+       })
+       const handleClick = async(e) =>{
+           e.preventDefault();
+           mutation.mutate({content, postId})
+           setContent("");
+       }
         return (
             <div className="comments">
                 <div className="write">
-                    <img src={currentUser.profilePic} alt=""/>
-                    <input type="text" placeholder="Write a comment"/>
+                    <img src={currentUser.profile_pic} alt=""/>
+                    <input type="text" placeholder="Write a comment"
+                           value={content}
+                           onChange={e=>{
+                        setContent(e.target.value)
+                    }}/>
+                    <button onClick={handleClick}>
                     <SendIcon className="send"/>
+                    </button>
                 </div>
-                {comments.map(comment => (
-                        <div className="comment" key={comment.id}>
-                            <img src={comment.profilePicture} alt=""/>
+                {isLoading
+                    ? "loading" :
+                    data.map(comment => (
+                        <div className="comment" key={comment.comment_id}>
+                            <img src={comment.profile_pic} alt=""/>
                             <div className="info">
-                                <span>{comment.name}</span>
-                                <p>{comment.desc}</p>
+                                <span>{comment.user_name}</span>
+                                <p>{comment.comment_content}</p>
                             </div>
-                            <span className="date">1 hour ago</span>
+                            <span className="date">{moment(comment.created_at)}</span>
                         </div>
                     ))}
             </div>

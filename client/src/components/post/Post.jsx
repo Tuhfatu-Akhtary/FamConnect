@@ -13,27 +13,9 @@ import moment from "moment";
 // eslint-disable-next-line react/prop-types
 const Post=({ post })=>{
 
-    const  [commentOpen, setCommentOpen]=useState(true)
+    const  [commentOpen, setCommentOpen]=useState(false)
     const liked= false;
 
-    /*function time() {
-        var startTime, endTime;
-
-        function start() {
-            startTime = {post.created_at};
-        }
-
-        function end() {
-            endTime = new Date();
-            var timeDiff = endTime - startTime; //in ms
-            // strip the ms
-            timeDiff /= 1000;
-
-            // get seconds
-            var seconds = Math.round(timeDiff);
-            return seconds;
-        }
-    }*/
     return (
         <div className="post">
             <div className="container">
@@ -46,6 +28,7 @@ const Post=({ post })=>{
                         <Link to={`/profile/${post.user_id}`} style={{textDecoration:"none", color:"inherit"}}>
                             {/* eslint-disable-next-line react/prop-types */}
                             <span className="name">{post.user_name}</span>
+                            {/* eslint-disable-next-line react/prop-types */}
                             <span className="date">{moment(post.created_at).fromNow()}</span>
                         </Link>
                     </div>
@@ -56,14 +39,14 @@ const Post=({ post })=>{
                 {/* eslint-disable-next-line react/prop-types */}
                 <p>{post.post_content}</p>
                 {/* eslint-disable-next-line react/prop-types */}
-                <img src={post.picture} alt=""/>
+                <img src={"./upload/"+post.picture} alt=""/>
             </div>
             <div className="info">
                 <div className="item">
                     {liked ? <FavoriteIcon/> :<FavoriteBorderIcon/>}
                     12 Likes
                 </div>
-                <div className="item" onClick={()=>setCommentOpen(commentOpen)}>
+                <div className="item" onClick={()=>setCommentOpen(!commentOpen)}>
                     <CommentIcon/>
                     12 Comments
                 </div>
@@ -72,10 +55,14 @@ const Post=({ post })=>{
                     12 shares
                 </div>
             </div>
-                {commentOpen && <Comments/>}
+                {/* eslint-disable-next-line react/prop-types */}
+                {commentOpen && <Comments postId={post.postId}/>}
             </div>
         </div>
     )
 }
 
 export default Post;
+
+
+
