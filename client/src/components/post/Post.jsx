@@ -6,16 +6,46 @@ import CommentIcon from '@mui/icons-material/Comment';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import {Link} from "react-router-dom";
 import Comments from "../comments/Comments.jsx";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import moment from "moment";
-
+import {useMutation, useQuery, useQueryClient} from "react-query";
+import {makeRequest} from "../../axios.js";
+import {AuthContext} from "../../context/authContext.jsx";
 
 // eslint-disable-next-line react/prop-types
 const Post=({ post })=>{
 
-    const  [commentOpen, setCommentOpen]=useState(false)
-    const liked= false;
+    const  [commentOpen, setCommentOpen]=useState(false);
 
+    const { currentUser } = useContext(AuthContext)
+    // eslint-disable-next-line react/prop-types
+    const { isLoading, error, data } = useQuery(["likes", post.id], () =>
+        // eslint-disable-next-line react/prop-types
+        makeRequest.get("/likes?postId="+post.id).then(res=>{
+            return res.data;
+        })
+    );
+
+    console.log(data)
+    const queryClient = useQueryClient();
+    const mutation = useMutation((liked) => {
+        if(liked)
+            // eslint-disable-next-line react/prop-types
+            return makeRequest.delete("/likes?postId="+ post.id)
+            // eslint-disable-next-line react/prop-types
+            return makeRequest.post("/likes",{postId: post.id});
+
+    }, {
+        onSuccess: () => {
+            // Invalidate and refetch
+            queryClient.invalidateQueries(["likes"])
+        },
+    })
+
+    const handleLike =() =>{
+
+        mutation.mutate(data.includes(currentUser.id))
+    };
     return (
         <div className="post">
             <div className="container">
@@ -43,12 +73,16 @@ const Post=({ post })=>{
             </div>
             <div className="info">
                 <div className="item">
-                    {liked ? <FavoriteIcon/> :<FavoriteBorderIcon/>}
-                    12 Likes
+                    {isLoading ? (
+                        "loading"
+                    ) : data.includes(currentUser.id) ? (
+                        <FavoriteIcon style={{color:"red"}} onClick={handleLike}/> )
+                        :(<FavoriteBorderIcon onClick={handleLike}/>)}
+                    {data?.length} Likes
                 </div>
                 <div className="item" onClick={()=>setCommentOpen(!commentOpen)}>
                     <CommentIcon/>
-                    12 Comments
+                    See Comments
                 </div>
                 <div className="item">
                     <ShareIcon/>
@@ -56,7 +90,7 @@ const Post=({ post })=>{
                 </div>
             </div>
                 {/* eslint-disable-next-line react/prop-types */}
-                {commentOpen && <Comments postId={post.postId}/>}
+                {commentOpen && <Comments postId={post.id}/>}
             </div>
         </div>
     )

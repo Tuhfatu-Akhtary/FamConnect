@@ -37,9 +37,10 @@
 
       .info{
         display: flex;
-        flex: 5;
+        flex: 3;
         flex-direction: column;
         gap: 3px;
+        text-align:left;
 
         span{
           font-weight: 500;

@@ -1,9 +1,17 @@
 import "./Login.scss";
 import {Link, useNavigate} from "react-router-dom"
-import {useContext, useState} from "react";
+import {useContext, useState, useEffect} from "react";
 import {AuthContext} from "../../context/authContext.jsx";
+import {HashLoader} from "react-spinners";
 
 const Login=()=>{
+    const [loading,setLoading] =useState(false);
+    useEffect(()=>{
+        setLoading(true)
+        setTimeout(()=>{
+            setLoading(false)
+        }, 3000)
+    },[])
     const [inputs,setInputs]= useState({
         email:"",
         password:"",
@@ -29,6 +37,14 @@ const Login=()=>{
     }
     return(
         <div className="login">
+            {
+                loading?
+                    <HashLoader
+                        color="#36d7b7"
+                        loading={loading}
+                        size={80}
+                    />:
+
             <div className="card">
                 <div className="left">
                     <h1>FamConnect</h1>
@@ -49,7 +65,9 @@ const Login=()=>{
                     </form>
                 </div>
             </div>
+            }
         </div>
+
     )
 };
 

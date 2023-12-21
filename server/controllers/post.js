@@ -15,7 +15,7 @@ export const getPosts = (req,res)=>{
             }
 
             else{
-                const q = "SELECT p.*,u.user_id,user_name,profile_pic FROM posts AS p JOIN user AS u ON (u.user_id = p.post_user_id)";
+                const q = "SELECT p.*,u.user_id,user_name,profile_pic FROM posts AS p JOIN user AS u ON (u.user_id = p.post_user_id) ORDER BY p.created_at DESC";
 
                 db.query(q, [userInfo.id], (err,data)=>{
                     if(err){
