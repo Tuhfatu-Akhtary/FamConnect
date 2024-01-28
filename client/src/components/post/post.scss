@@ -16,6 +16,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        position: relative;
 
         .userInfo {
           display: flex;
@@ -43,13 +44,24 @@
             }
           }
         }
+        button{
+          position: absolute;
+          top: 30px;
+          right: 0;
+          border: none;
+          background-color: #938eef;
+          padding: 5px;
+          cursor: pointer;
+          color: white;
+          border-radius: 5px;
+        }
       }
       .content{
         margin: 20px 0;
 
         img{
-          width: 100%;
-          max-height: 500px;
+          width: 90%;
+          max-height: 400px;
           object-fit: cover;
           margin-top:20px;
         }

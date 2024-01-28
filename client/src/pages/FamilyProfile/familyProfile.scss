@@ -1,6 +1,6 @@
 @import "../../style.scss";
 
-.profile {
+.familyProfile {
   @include themify($themes) {
     background-color: themed("bgSoft");
     width: 100%;

@@ -37,13 +37,14 @@
 
       .info{
         display: flex;
-        flex: 3;
-        flex-direction: column;
+        flex: 4;
+        flex-direction: row;
         gap: 3px;
         text-align:left;
 
         span{
           font-weight: 500;
+          padding-right: 5%;
         }
 
         p{

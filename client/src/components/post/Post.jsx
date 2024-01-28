@@ -15,7 +15,8 @@ import {AuthContext} from "../../context/authContext.jsx";
 // eslint-disable-next-line react/prop-types
 const Post=({ post })=>{
 
-    const  [commentOpen, setCommentOpen]=useState(false);
+    const [commentOpen, setCommentOpen]=useState(false);
+    const [menuOpen, setmenuOpen]=useState(false);
 
     const { currentUser } = useContext(AuthContext)
     // eslint-disable-next-line react/prop-types
@@ -25,8 +26,6 @@ const Post=({ post })=>{
             return res.data;
         })
     );
-
-    console.log(data)
     const queryClient = useQueryClient();
     const mutation = useMutation((liked) => {
         if(liked)
@@ -40,11 +39,27 @@ const Post=({ post })=>{
             // Invalidate and refetch
             queryClient.invalidateQueries(["likes"])
         },
+    });
+
+    const deleteMutation = useMutation((postId) => {
+            // eslint-disable-next-line react/prop-types
+            return makeRequest.delete("/posts/"+ postId);
+
+    }, {
+        onSuccess: () => {
+            // Invalidate and refetch
+            queryClient.invalidateQueries(["posts"])
+        },
     })
 
     const handleLike =() =>{
+        mutation.mutate(data.includes(currentUser.user_id))
+    };
 
-        mutation.mutate(data.includes(currentUser.id))
+    const handleDelete =() =>{
+        // eslint-disable-next-line react/prop-types
+        deleteMutation.mutate(post.id)
+
     };
     return (
         <div className="post">
@@ -63,7 +78,10 @@ const Post=({ post })=>{
                         </Link>
                     </div>
                 </div>
-                <MoreHorizIcon/>
+                <MoreHorizIcon onClick={()=>setmenuOpen(!menuOpen)}/>
+                {/* eslint-disable-next-line react/prop-types */}
+                {menuOpen && post.post_user_id=== currentUser.user_id
+                    &&(<button onClick={handleDelete}>Delete post</button>)}
             </div>
             <div className="content">
                 {/* eslint-disable-next-line react/prop-types */}
@@ -75,7 +93,7 @@ const Post=({ post })=>{
                 <div className="item">
                     {isLoading ? (
                         "loading"
-                    ) : data.includes(currentUser.id) ? (
+                    ) : data.includes(currentUser.user_id) ? (
                         <FavoriteIcon style={{color:"red"}} onClick={handleLike}/> )
                         :(<FavoriteBorderIcon onClick={handleLike}/>)}
                     {data?.length} Likes
@@ -83,10 +101,6 @@ const Post=({ post })=>{
                 <div className="item" onClick={()=>setCommentOpen(!commentOpen)}>
                     <CommentIcon/>
                     See Comments
-                </div>
-                <div className="item">
-                    <ShareIcon/>
-                    12 shares
                 </div>
             </div>
                 {/* eslint-disable-next-line react/prop-types */}

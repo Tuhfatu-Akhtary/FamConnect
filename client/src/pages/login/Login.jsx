@@ -10,7 +10,7 @@ const Login=()=>{
         setLoading(true)
         setTimeout(()=>{
             setLoading(false)
-        }, 3000)
+        }, 7000)
     },[])
     const [inputs,setInputs]= useState({
         email:"",

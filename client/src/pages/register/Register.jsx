@@ -6,24 +6,24 @@ import { Stepper, StepLabel, Step} from "@mui/material";
 
 
 const Register=()=>{
-
     const [step, setStep]=useState(1);
-    const [inputs, setInputs] = useState({
-        first_name: "",
-        last_name: "",
-        father_name:"",
-        mother_name:"",
-        dob:"",
-        gender:"",
-        email:"",
-        phone_no:"",
-        user_name:"",
-        password: "",
-        Cpassword: "",
-    });
+     const [inputs, setInputs] = useState({
+         first_name: "",
+         last_name: "",
+         father_name:"",
+         mother_name:"",
+         dob:"",
+         gender:"",
+         email:"",
+         phone_no:"",
+         user_name:"",
+         password: "",
+         Cpassword: "",
+     });
 
     const nextStep = () => {
         setStep(step + 1);
+
     };
 
     const prevStep = () => {
@@ -35,15 +35,15 @@ const Register=()=>{
         setInputs({
             ...inputs,
             [name]: value,
-        });
+        })
+        ;
     };
 
     const handleSubmit =async (e) => {
         e.preventDefault();
-
         try {
             await axios.post("http://localhost:8800/server/auth/register", inputs);
-            navigate("/welcome");
+            navigate("/login");
         } catch (err) {
             setErr(err.response.data)
         }
@@ -52,8 +52,7 @@ const Register=()=>{
     function showStep (step){
         switch (step){
             case 1:
-                return (
-
+                return(
                         <div className="forms">
                             <input type="text" placeholder="First Name" name="first_name" onChange={handleChange} />
                             <input type="text" placeholder="Last Name" name="last_name" onChange={handleChange}/>
@@ -99,8 +98,8 @@ const Register=()=>{
                 return (
 
                         <div className="forms">
-                            <input type="image" placeholder="Profile Picture" name="profile_pic"/>
-                            <input type="image" placeholder="Cover Picture" name="cover_pic"/>
+                            <input type="file" placeholder="Profile Picture" name="profile_pic"/>
+                            <input type="file" placeholder="Cover Picture" name="cover_pic"/>
 
                             <div className="buttons">
                                 <button onClick={prevStep} >Previous</button>
@@ -128,7 +127,7 @@ const Register=()=>{
                     <div className="center">
                         <h1>Registration</h1>
                         <div className="center-stepper">
-                            <Stepper style={{width: "20%"}} activeStep={step} orientation="horizontal">
+                            <Stepper style={{width: "20%"}} activeStep={step-1} orientation="horizontal">
                                 <Step>
                                     <StepLabel></StepLabel>
                                 </Step>

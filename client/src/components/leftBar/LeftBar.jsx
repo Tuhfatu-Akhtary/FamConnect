@@ -6,7 +6,7 @@ import settings from "../../assets/settings.png"
 import {useContext, useState} from "react";
 import {AuthContext} from "../../context/authContext.jsx";
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 const LeftBar=()=>{
     const [err,setErr]= useState(null)
@@ -33,19 +33,17 @@ const LeftBar=()=>{
                         <span>{currentUser.user_name}</span>
                     </div>
 
+
+                    <Link to="/welcome" style={{textDecoration:"none", color: "black"}}>
                     <div className="item">
                         <img src={family} alt="family"/>
                         <span>Family</span>
                     </div>
-                    <div className="item">
-                        <img src={event} alt="events"/>
-                        <span>Events</span>
-                    </div>
-
-                    <div className="item">
-                        <img src={settings} alt="setting"/>
-                        <span>Settings</span>
-                    </div>
+                    </Link>
+                    {/*<div className="item">*/}
+                    {/*    <img src={settings} alt="setting"/>*/}
+                    {/*    <span>Settings</span>*/}
+                    {/*</div>*/}
                     <div className="item" onClick={handleClick}>
                         <img src={logout} alt="logout"/>
                         <span>Log out</span>

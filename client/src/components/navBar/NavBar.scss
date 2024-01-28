@@ -45,6 +45,9 @@
           background-color: transparent;
           color: themed("textColor");
         }
+        input:focus{
+          outline: none;
+        }
       }
     }
     .right {
@@ -54,6 +57,7 @@
 
       .icons{
         cursor: pointer;
+        color: themed(textColor);
       }
 
       .user {

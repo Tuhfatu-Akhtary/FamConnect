@@ -1,6 +1,7 @@
 .Welcome{
   height: 100%;
   background-color: rgb(193,190,255);
+  width: auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -12,7 +13,7 @@
     flex-direction: column;
     border-radius: 10px;
     min-height: 600px;
-    padding: 50px;
+    padding: 30px;
 
     p{
       font-weight: bold;

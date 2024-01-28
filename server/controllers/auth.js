@@ -1,7 +1,6 @@
 import { db } from "../connect.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import router from "../routes/auth.js";
 import crypto from "crypto-js";
 import moment from "moment";
 
@@ -92,39 +91,79 @@ export const logout = (req,res)=>{
     }).status(200).json("User has been logged out");
 };
 
-export const familyCreate = (req,res)=>{
 
-    const q = "SELECT * FROM family WHERE authentication_code = ?";
+export const createFamily = (req,res)=>{
+    const token=req.cookies.accessToken;
+    if(!token)
+    {
+        return res.status(401).json("Not Loggedin");
+    }
+    else{
+        jwt.verify(token, "secretkey",(err,userInfo)=> {
+            if (err) {
+                return res.status(403).json("Token is not valid")
+            }
+            else{
+                const q="INSERT INTO family(family_name, creator_user_id,address, description,created_at) VALUES (?) "
 
-    db.query(q,[req.body.authentication_code], (err,data)=>{
+                const values =[
+                    req.body.family_name,
+                    userInfo.id,
+                    req.body.address,
+                    req.body.description,
+                    moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
+                ];
+
+                db.query(q,[values], (err,data)=>{
+                    if(err){
+                        return res.status(500).json(err);
+                    }
+                    else{
+                        return res.status(200).json("Family has been created");
+                    }
+                });
+            }
+        });
+    }
+
+}
+
+export const searchFamily =(req,res)=>{
+
+    // Replace "family_names" with the actual table name in your database
+    const sql = "SELECT * FROM family";
+
+
+    db.query(sql,(err, results) => {
+        if (err) {
+            console.error("Error executing MySQL query:", err);
+            res.status(500).json({ error: "Internal Server Error" });
+        } else {
+            return res.status(200).json(results);
+        }
+    });
+
+    {/*const q = "SELECT * FROM family WHERE family_name = ?";
+
+    db.query(q,[req.query.search], (err,data)=>{
         if(err){
             return res.status(500).json(err);
         }
-        if(data.length!==0){
-            return res.status(409).json("Family already exists")
-        }
         else{
-
-            const q="INSERT INTO family(family_name, address, description, authentication_code) VALUES (?) "
-
-
-            const values =[
-                req.body.family_name,
-                req.body.address,
-                req.body.description,
-                req.body.authentication_code,
-            ];
-
-            db.query(q,[values], (err,data)=>{
-                if(err){
-                    return res.status(500).json(err);
-                }
-                else{
-                    return res.status(200).json("Family has been created");
-                }
-            });
+            return res.status(200).json(data);
+            console.log(data);
         }
-
     });
+    */}
+}
 
+export const familyProfile=(req,res)=>{
+        const familyId =req.params.familyId;
+        const q ="SELECT * FROM family WHERE family_id=?"
+
+        db.query(q, [familyId], (err,data)=>{
+            if(err) return res.status(500).json(err)
+            return res.json(data);
+
+        });
 }

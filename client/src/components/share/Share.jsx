@@ -1,6 +1,5 @@
 import "./share.scss";
 import img from "../../assets/img.png";
-import friend from "../../assets/friend.png";
 import {useContext, useState} from "react";
 import {AuthContext} from "../../context/authContext.jsx";
 import {useMutation, useQueryClient} from 'react-query'
@@ -29,7 +28,6 @@ const Share = () => {
         return makeRequest.post("/posts", newPost)
     }, {
         onSuccess: () => {
-            // Invalidate and refetch
             queryClient.invalidateQueries(["posts"])
         },
     })
@@ -67,10 +65,7 @@ const Share = () => {
                                 <span>Add Image</span>
                             </div>
                         </label>
-                        <div className="item">
-                            <img src={friend} alt=""/>
-                            <span>Tag Friends</span>
-                        </div>
+
                     </div>
                     <div className="right">
                         <button onClick={handleClick}>Share</button>

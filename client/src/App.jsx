@@ -9,7 +9,7 @@ import LeftBar from "./components/leftBar/LeftBar.jsx";
 import RightBar from "./components/rightBar/RightBar.jsx";
 import Home from "./pages/home/Home.jsx";
 import Profile from "./pages/profile/Profile.jsx";
-import UserProfile from "./pages/userProfile/UserProfile.jsx";
+import FamilyProfile from "./pages/FamilyProfile/FamilyProfile.jsx";
 import "./style.scss"
 import {useContext} from "react";
 import {DarkModeContext} from "./context/darkModeContext.jsx";
@@ -19,7 +19,8 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import Welcome from "./pages/Welcome/Welcome.jsx";
 import JoinFamily from "./pages/joinFamily/JoinFamily.jsx";
 import CreateFamily from "./pages/createFamily/CreateFamily.jsx";
-
+import Messenger from "./pages/messenger/Messenger.jsx";
+import Conversation from "./components/conversations/Conversation.jsx";
 function App(){
 
     const {currentUser} = useContext(AuthContext);
@@ -38,10 +39,20 @@ function App(){
                     <div style={{flex:6}}>
                         <Outlet/>
                     </div>
-
                     <RightBar/>
                 </div>
             </div>
+            </QueryClientProvider>
+        )
+    };
+
+    const LayoutChat =()=>{
+        return(
+            <QueryClientProvider client={queryClient}>
+                <div className={`theme-${darkMode ? "dark" : "light"}`}>
+                    <NavBar/>
+                    <Messenger/>
+                </div>
             </QueryClientProvider>
         )
     };
@@ -71,14 +82,28 @@ function App(){
                    element:<Profile/>
                },
                {
-                   path: "/userProfile/:id",
-                   element: <UserProfile/>,
+                   path: "/familyProfile/:id",
+                   element: <FamilyProfile/>,
                },
 
                {
                    path: "/familytree/:id",
                    element: <FamilyTree/>,
                },
+               {
+                   path: "/welcome",
+                   element:<Welcome/>,
+               },
+               {
+                   path:"/joinFamily",
+                   element:<JoinFamily/>,
+               },
+               {
+                   path:"/createFamily",
+                   element:<CreateFamily/>,
+               },
+
+
            ]
         },
     {
@@ -90,18 +115,11 @@ function App(){
         element: <Register/>,
     },
         {
-            path: "/welcome",
-            element:<Welcome/>,
+            path: "/messenger",
+            element: (<ProtectedRoute>
+                    <LayoutChat/>
+                   </ProtectedRoute>)
         },
-        {
-            path:"/joinFamily",
-            element:<JoinFamily/>,
-        },
-        {
-            path:"/createFamily",
-            element:<CreateFamily/>,
-        }
-
 ]);
 
     return (
